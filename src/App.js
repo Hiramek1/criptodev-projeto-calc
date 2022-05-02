@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-expressions */
 import React, { useState } from "react";
-
 import Wrapper from "./components/Wrapper";
 import Screen from "./components/Screen";
 import ButtonBox from "./components/ButtonBox";
@@ -36,8 +36,8 @@ const App = () => {
           calc.num === 0 && value === "0"
             ? "0"
             : removeSpaces(calc.num) % 1 === 0
-            ? toLocaleString(Number(removeSpaces(calc.num + value)))
-            : toLocaleString(calc.num + value),
+              ? toLocaleString(Number(removeSpaces(calc.num + value)))
+              : toLocaleString(calc.num + value),
         res: !calc.sign ? 0 : calc.res,
       });
     }
@@ -71,10 +71,10 @@ const App = () => {
         sign === "+"
           ? a + b
           : sign === "-"
-          ? a - b
-          : sign === "X"
-          ? a * b
-          : a / b;
+            ? a - b
+            : sign === "X"
+              ? a * b
+              : a / b;
 
       setCalc({
         ...calc,
@@ -82,12 +82,12 @@ const App = () => {
           calc.num === "0" && calc.sign === "/"
             ? "Can't divide with 0"
             : toLocaleString(
-                math(
-                  Number(removeSpaces(calc.res)),
-                  Number(removeSpaces(calc.num)),
-                  calc.sign
-                )
-              ),
+              math(
+                Number(removeSpaces(calc.res)),
+                Number(removeSpaces(calc.num)),
+                calc.sign
+              )
+            ),
         sign: "",
         num: 0,
       });
@@ -124,6 +124,45 @@ const App = () => {
     });
   };
 
+  React.useEffect(() => {
+    window.addEventListener('keydown', (e) => {
+      if (
+        e.key === "+" ||
+        e.key === "-" ||
+        e.key === "*" ||
+        e.key === "/" ||
+        e.key === "="
+      ) {
+        if (e.key === "=") {
+          equalsClickHandler;
+          return
+        }
+        signClickHandler
+      }
+      if (e.key === "Escape") {
+        resetClickHandler;
+        return
+      }
+      if (e.key === "NumpadDecimal") {
+        commaClickHandler;
+        return
+      }
+      if (e.code.startsWith("Num")) {
+        numClickHandler;
+        return
+      }
+      if (
+        e.code.startsWith("Shift") ||
+        e.code.startsWith("Control") ||
+        e.code.startsWith("Alt") ||
+        e.code.startsWith("Meta")
+      ) {
+        return
+      }
+      alert("tecla inválida")
+    });
+  });
+
   return (
     <Wrapper>
       <Screen value={calc.num ? calc.num : calc.res} />
@@ -136,18 +175,18 @@ const App = () => {
               value={btn}
               onClick={
                 btn === "C"
-                  ? resetClickHandler
-                  : btn === "+-"
-                  ? invertClickHandler
-                  : btn === "%"
-                  ? percentClickHandler
-                  : btn === "="
-                  ? equalsClickHandler
-                  : btn === "/" || btn === "X" || btn === "-" || btn === "+"
-                  ? signClickHandler
-                  : btn === "."
-                  ? commaClickHandler
-                  : numClickHandler
+                ? resetClickHandler
+                : btn === "+-"
+                ? invertClickHandler
+                : btn === "%"
+                ? percentClickHandler
+                : btn === "="
+                ? equalsClickHandler
+                : btn === "/" || btn === "X" || btn === "-" || btn === "+"
+                ? signClickHandler
+                : btn === "."
+                ? commaClickHandler
+                : numClickHandler
               }
             />
           );
