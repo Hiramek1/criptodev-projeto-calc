@@ -137,7 +137,7 @@ const App = () => {
           equalsClickHandler;
           return
         }
-        signClickHandler
+        signClickHandler;
       }
       if (e.key === "Escape") {
         resetClickHandler;
